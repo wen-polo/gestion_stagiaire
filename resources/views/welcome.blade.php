@@ -39,8 +39,8 @@
         <div class="container mx-auto text-center">
             <h1 class="text-4xl font-bold mb-4">Bienvenue sur la plateforme de gestion des stagiaires</h1>
             <p class="text-lg mb-6">Envoyez vos demandes de stage, gérez vos tâches et vos documents en toute simplicité.</p>
-            <a href="#" class="bg-white text-blue-600 px-6 py-3 rounded-lg shadow-md hover:bg-gray-100">
-                Commencer Maintenant
+            <a href="{{ route('demande.create') }}" class="bg-white text-blue-600 px-6 py-3 rounded-lg shadow-md hover:bg-gray-100">
+                Demande de Stage
             </a>
         </div>
     </header>
