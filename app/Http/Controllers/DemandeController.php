@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use App\Notifications\StagiairePasswordNotification;
+use Illuminate\Support\Str;
 
 class DemandeController extends Controller
 {
@@ -141,12 +142,22 @@ class DemandeController extends Controller
     public function confirmer($id)
     {
         try {
+            \Log::info('Début de la méthode confirmer pour la demande ID : ' . $id);
+
             $demande = Demande::findOrFail($id);
+            \Log::info('Demande trouvée : ', $demande->toArray());
 
             if (!$demande->poste_affectation) {
+                \Log::error('Poste d\'affectation non défini pour la demande ID : ' . $id);
                 return response()->json(['success' => false, 'message' => 'Le poste d\'affectation n\'est pas défini pour cette demande.']);
             }
 
+            // Générer un mot de passe aléatoire
+            $plainPassword = Str::random(8); // Mot de passe en clair
+            $hashedPassword = bcrypt($plainPassword); // Mot de passe hashé
+            \Log::info('Mot de passe généré pour la demande ID : ' . $id);
+
+            // Insérer les données dans la table correspondante
             switch ($demande->poste_affectation) {
                 case 'Secretaria':
                     DB::table('secretaria')->insert([
@@ -154,6 +165,7 @@ class DemandeController extends Controller
                         'prenom' => $demande->prenom,
                         'email' => $demande->email,
                         'filiere' => $demande->filiere,
+                        'password' => $hashedPassword,
                         'created_at' => now(),
                         'updated_at' => now(),
                     ]);
@@ -165,6 +177,7 @@ class DemandeController extends Controller
                         'prenom' => $demande->prenom,
                         'email' => $demande->email,
                         'filiere' => $demande->filiere,
+                        'password' => $hashedPassword,
                         'created_at' => now(),
                         'updated_at' => now(),
                     ]);
@@ -176,6 +189,7 @@ class DemandeController extends Controller
                         'prenom' => $demande->prenom,
                         'email' => $demande->email,
                         'filiere' => $demande->filiere,
+                        'password' => $hashedPassword,
                         'created_at' => now(),
                         'updated_at' => now(),
                     ]);
@@ -187,17 +201,26 @@ class DemandeController extends Controller
                         'prenom' => $demande->prenom,
                         'email' => $demande->email,
                         'filiere' => $demande->filiere,
+                        'password' => $hashedPassword,
                         'created_at' => now(),
                         'updated_at' => now(),
                     ]);
                     break;
 
                 default:
+                    \Log::error('Poste d\'affectation inconnu pour la demande ID : ' . $id);
                     return response()->json(['success' => false, 'message' => 'Poste d\'affectation inconnu.']);
             }
 
+            \Log::info('Données insérées avec succès pour la demande ID : ' . $id);
+
+            // Envoyer la notification avec le mot de passe en clair
+            $demande->notify(new StagiairePasswordNotification($plainPassword));
+            \Log::info('Notification envoyée pour la demande ID : ' . $id);
+
             // Mettre à jour le statut de la demande
             $demande->update(['affectation_statut' => 'confirme']);
+            \Log::info('Statut de la demande mis à jour pour la demande ID : ' . $id);
 
             return response()->json(['success' => true]);
         } catch (\Exception $e) {
@@ -252,5 +275,17 @@ class DemandeController extends Controller
 
         // Retourner la vue avec les données
         return view('dashboard.secretaria', compact('demandes'));
+    }
+
+    public function showStagiaire($poste, $email)
+    {
+        // Récupérer les données du stagiaire dans la table correspondante
+        $stagiaire = DB::table($poste)->where('email', $email)->first();
+
+        if (!$stagiaire) {
+            abort(404, 'Stagiaire non trouvé.');
+        }
+
+        return view('stagiaire.profile', compact('stagiaire', 'poste'));
     }
 }

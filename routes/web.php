@@ -51,3 +51,8 @@ Route::get('/demande/analysed', [DemandeController::class, 'analysed'])->name('d
 Route::get('/demande/{id}', [DemandeController::class, 'show'])->name('demande.show');
 Route::post('/demande/{id}/affecter', [DemandeController::class, 'affecter'])->name('demande.affecter');
 Route::post('/demande/{id}/confirmer', [DemandeController::class, 'confirmer'])->name('demande.confirmer');
+
+Route::get('/stagiaire/{poste}/{email}', [DemandeController::class, 'showStagiaire'])->name('stagiaire.show');
+
+Route::get('/login', [StagiaireController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [StagiaireController::class, 'login'])->name('login.post');

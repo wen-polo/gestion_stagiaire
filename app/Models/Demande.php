@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use App\Models\Demande;
 
 class Demande extends Model
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
 
     protected $fillable = [
         'nom',
@@ -23,6 +25,6 @@ class Demande extends Model
         'contacts',
         'pdf_path',
         'statut',
-        'poste_affectation', // Ajoutez cette ligne
+        'poste_affectation',
     ];
 }
