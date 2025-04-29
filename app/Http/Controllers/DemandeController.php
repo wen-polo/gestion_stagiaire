@@ -117,7 +117,16 @@ class DemandeController extends Controller
     public function show($id)
     {
         $demande = Demande::findOrFail($id);
-        return response()->json($demande);
+
+        return response()->json([
+            'nom' => $demande->nom,
+            'prenom' => $demande->prenom,
+            'email' => $demande->email,
+            'filiere' => $demande->filiere,
+            'niveau' => $demande->niveau,
+            'diplome' => $demande->diplome,
+            'pdf_path' => $demande->pdf_path,
+        ]);
     }
 
     public function affecter(Request $request, $id)
@@ -165,6 +174,8 @@ class DemandeController extends Controller
                         'prenom' => $demande->prenom,
                         'email' => $demande->email,
                         'filiere' => $demande->filiere,
+                        'date_debut' => $demande->date_debut,
+                        'date_fin' => $demande->date_fin,
                         'password' => $hashedPassword,
                         'created_at' => now(),
                         'updated_at' => now(),
@@ -177,6 +188,8 @@ class DemandeController extends Controller
                         'prenom' => $demande->prenom,
                         'email' => $demande->email,
                         'filiere' => $demande->filiere,
+                        'date_debut' => $demande->date_debut,
+                        'date_fin' => $demande->date_fin,
                         'password' => $hashedPassword,
                         'created_at' => now(),
                         'updated_at' => now(),
@@ -189,6 +202,8 @@ class DemandeController extends Controller
                         'prenom' => $demande->prenom,
                         'email' => $demande->email,
                         'filiere' => $demande->filiere,
+                        'date_debut' => $demande->date_debut,
+                        'date_fin' => $demande->date_fin,
                         'password' => $hashedPassword,
                         'created_at' => now(),
                         'updated_at' => now(),
@@ -201,6 +216,8 @@ class DemandeController extends Controller
                         'prenom' => $demande->prenom,
                         'email' => $demande->email,
                         'filiere' => $demande->filiere,
+                        'date_debut' => $demande->date_debut,
+                        'date_fin' => $demande->date_fin,
                         'password' => $hashedPassword,
                         'created_at' => now(),
                         'updated_at' => now(),
@@ -287,5 +304,77 @@ class DemandeController extends Controller
         }
 
         return view('stagiaire.profile', compact('stagiaire', 'poste'));
+    }
+
+    public function showDsi($id)
+    {
+        $demande = DB::table('dsi')->where('id', $id)->first();
+
+        if (!$demande) {
+            return response()->json(['error' => 'Demande non trouvée.'], 404);
+        }
+
+        return response()->json([
+            'nom' => $demande->nom,
+            'prenom' => $demande->prenom,
+            'email' => $demande->email,
+            'filiere' => $demande->filiere,
+            'date_debut' => $demande->date_debut,
+            'date_fin' => $demande->date_fin,
+        ]);
+    }
+
+    public function showDpaf($id)
+    {
+        $demande = DB::table('dpaf')->where('id', $id)->first();
+
+        if (!$demande) {
+            return response()->json(['error' => 'Demande non trouvée.'], 404);
+        }
+
+        return response()->json([
+            'nom' => $demande->nom,
+            'prenom' => $demande->prenom,
+            'email' => $demande->email,
+            'filiere' => $demande->filiere,
+            'date_debut' => $demande->date_debut,
+            'date_fin' => $demande->date_fin,
+        ]);
+    }
+
+    public function showSecretaria($id)
+    {
+        $demande = DB::table('secretaria')->where('id', $id)->first();
+
+        if (!$demande) {
+            return response()->json(['error' => 'Demande non trouvée.'], 404);
+        }
+
+        return response()->json([
+            'nom' => $demande->nom,
+            'prenom' => $demande->prenom,
+            'email' => $demande->email,
+            'filiere' => $demande->filiere,
+            'date_debut' => $demande->date_debut,
+            'date_fin' => $demande->date_fin,
+        ]);
+    }
+
+    public function showComptabilite($id)
+    {
+        $demande = DB::table('service_comptabilite')->where('id', $id)->first();
+
+        if (!$demande) {
+            return response()->json(['error' => 'Demande non trouvée.'], 404);
+        }
+
+        return response()->json([
+            'nom' => $demande->nom,
+            'prenom' => $demande->prenom,
+            'email' => $demande->email,
+            'filiere' => $demande->filiere,
+            'date_debut' => $demande->date_debut,
+            'date_fin' => $demande->date_fin,
+        ]);
     }
 }

@@ -78,12 +78,13 @@
         fetch(`/demande/${id}`)
             .then(response => response.json())
             .then(data => {
+                // Mettre à jour les champs de la modale avec les données récupérées
                 document.getElementById('modalNom').textContent = data.nom;
                 document.getElementById('modalPrenom').textContent = data.prenom;
                 document.getElementById('modalEmail').textContent = data.email;
                 document.getElementById('modalFiliere').textContent = data.filiere;
-                document.getElementById('modalNiveau').textContent = data.niveau;
-                document.getElementById('modalDiplome').textContent = data.diplome;
+                document.getElementById('modalNiveau').textContent = data.niveau || 'Non spécifié';
+                document.getElementById('modalDiplome').textContent = data.diplome || 'Non spécifié';
 
                 // Lien vers le PDF
                 const pdfUrl = `/storage/${data.pdf_path}`;
@@ -96,6 +97,10 @@
 
                 // Afficher la modale
                 document.getElementById('detailModal').classList.remove('hidden');
+            })
+            .catch(error => {
+                console.error('Erreur lors de la récupération des données :', error);
+                alert('Impossible de charger les détails de la demande.');
             });
     }
 

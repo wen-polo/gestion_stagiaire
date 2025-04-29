@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DemandeController;
 use App\Http\Controllers\StagiaireController;
 use App\Http\Controllers\RapportController;
+use App\Http\Controllers\DsiController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -37,10 +38,17 @@ Route::get('/dashboard/dpaf_post', [DemandeController::class, 'dashboardDpafPost
 Route::get('/dashboard-srhds', [DemandeController::class, 'dashboardSrhds'])->name('dashboard.srhds');
 
 // Tableau de bord DSI
-Route::get('/dashboard/dsi', [DemandeController::class, 'dashboardDsi'])->name('dashboard.dsi');
+Route::get('/dashboard-dsi', [DsiController::class, 'dashboard'])->name('dashboard.dsi');
+Route::get('/dsi/profile', [DsiController::class, 'profile'])->name('dsi.profile');
+Route::get('/dsi/documents', [DsiController::class, 'documents'])->name('dsi.documents');
+Route::post('/dsi/logout', [DsiController::class, 'logout'])->name('dsi.logout');
+Route::get('/dsi/tasks', [DsiController::class, 'tasks'])->name('dsi.tasks');
+Route::get('/dsi/demande/{id}', [DemandeController::class, 'showDsi'])->name('dsi.show');
 
 // Route spécifique pour comptabilite
 Route::get('/dashboard/comptabilite', [DemandeController::class, 'dashboardComptabilite'])->name('dashboard.comptabilite');
+Route::get('/dashboard-comptabilite', [ComptabiliteController::class, 'dashboard'])->name('dashboard.comptabilite');
+Route::get('/comptabilite/demande/{id}', [DemandeController::class, 'showComptabilite'])->name('comptabilite.show');
 
 // Route dynamique pour les autres postes
 Route::get('/dashboard/{poste}', [DemandeController::class, 'dashboardPoste'])->name('dashboard.poste');
@@ -56,3 +64,14 @@ Route::get('/stagiaire/{poste}/{email}', [DemandeController::class, 'showStagiai
 
 Route::get('/login', [StagiaireController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [StagiaireController::class, 'login'])->name('login.post');
+
+Route::get('/stagiaire/dashboard', [StagiaireController::class, 'dashboard'])->name('stagiaire.dashboard');
+Route::get('/stagiaire/profile', [StagiaireController::class, 'profile'])->name('stagiaire.profile');
+Route::get('/stagiaire/documents', [StagiaireController::class, 'documents'])->name('stagiaire.documents');
+Route::post('/stagiaire/logout', [StagiaireController::class, 'logout'])->name('stagiaire.logout');
+
+Route::get('/demande/tasks', [DemandeController::class, 'tasks'])->name('demande.tasks');
+
+Route::get('/dpaf/demande/{id}', [DemandeController::class, 'showDpaf'])->name('dpaf.show');
+
+Route::get('/secretaria/demande/{id}', [DemandeController::class, 'showSecretaria'])->name('secretaria.show');
