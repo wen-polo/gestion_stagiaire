@@ -46,6 +46,7 @@ Route::get('/dsi/documents', [DsiController::class, 'documents'])->name('dsi.doc
 Route::post('/dsi/logout', [DsiController::class, 'logout'])->name('dsi.logout');
 Route::get('/dsi/tasks', [DemandeController::class, 'tasksDsi'])->name('dsi.tasks');
 Route::get('/dsi/demande/{id}', [DemandeController::class, 'showDsi'])->name('dsi.show');
+Route::post('/dsi/assign-task', [DsiController::class, 'assignTask'])->name('dsi.assignTask');
 
 // Route spécifique pour comptabilite
 Route::get('/dashboard/comptabilite', [DemandeController::class, 'dashboardComptabilite'])->name('dashboard.comptabilite');
@@ -63,7 +64,7 @@ Route::get('/demande/{id}', [DemandeController::class, 'show'])->name('demande.s
 Route::post('/demande/{id}/affecter', [DemandeController::class, 'affecter'])->name('demande.affecter');
 Route::post('/demande/{id}/confirmer', [DemandeController::class, 'confirmer'])->name('demande.confirmer');
 
-Route::get('/stagiaire/{poste}/{email}', [DemandeController::class, 'showStagiaire'])->name('stagiaire.show');
+Route::get('/stagiaire/{poste}/{email}', [StagiaireController::class, 'profile'])->name('stagiaire.show');
 
 Route::get('/login', [StagiaireController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [StagiaireController::class, 'login'])->name('login.post');

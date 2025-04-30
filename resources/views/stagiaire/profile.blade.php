@@ -29,6 +29,27 @@
                 <p class="mb-4"><strong>Email :</strong> {{ $stagiaire->email }}</p>
                 <p class="mb-4"><strong>Filière :</strong> {{ $stagiaire->filiere }}</p>
                 <p class="mb-4"><strong>Poste :</strong> {{ ucfirst($poste) }}</p>
+                <h2 class="text-xl font-bold mb-4">Tâches Assignées</h2>
+                <table class="table-auto w-full">
+                    <thead>
+                        <tr>
+                            <th class="px-4 py-2 text-left">Titre</th>
+                            <th class="px-4 py-2 text-left">Description</th>
+                            <th class="px-4 py-2 text-left">Date Limite</th>
+                            <th class="px-4 py-2 text-left">Heure Limite</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($tasks as $task)
+                        <tr>
+                            <td class="border px-4 py-2">{{ $task->title }}</td>
+                            <td class="border px-4 py-2">{{ $task->description }}</td>
+                            <td class="border px-4 py-2">{{ $task->deadline_date }}</td>
+                            <td class="border px-4 py-2">{{ $task->deadline_time }}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
     </main>

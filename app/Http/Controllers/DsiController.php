@@ -22,18 +22,29 @@ class DsiController extends Controller
     public function assignTask(Request $request)
     {
         $validated = $request->validate([
-            'userId' => 'required|exists:dsi,id',
-            'taskDescription' => 'required|string|max:255',
+            'userId' => 'required|exists:dsi,id', // Vérifie que l'ID existe dans la table `dsi`
+            'taskTitle' => 'required|string|max:255',
+            'taskDescription' => 'required|string',
+            'taskDeadline' => 'required|date',
+            'taskTime' => 'required|date_format:H:i',
         ]);
 
-        DB::table('tasks')->insert([
-            'user_id' => $validated['userId'],
-            'description' => $validated['taskDescription'],
-            'poste' => 'dsi', // Indique que la tâche est liée à DSI
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+        try {
+            DB::table('tasks')->insert([
+                'user_id' => $validated['userId'],
+                'title' => $validated['taskTitle'],
+                'description' => $validated['taskDescription'],
+                'deadline_date' => $validated['taskDeadline'],
+                'deadline_time' => $validated['taskTime'],
+                'poste' => 'dsi',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
 
-        return response()->json(['success' => true]);
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            \Log::error('Erreur lors de l\'assignation de la tâche : ' . $e->getMessage());
+            return response()->json(['success' => false, 'message' => 'Une erreur est survenue.']);
+        }
     }
 }

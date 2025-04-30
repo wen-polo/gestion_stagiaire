@@ -37,4 +37,32 @@ class StagiaireController extends Controller
 
         return back()->withErrors(['email' => 'Identifiants incorrects.']);
     }
+
+    public function profile(Request $request, $poste, $email)
+    {
+        // Liste des tables valides
+        $tables = ['dsi', 'secretaria', 'service_comptabilite', 'dpaf'];
+
+        // Vérifier que le poste est valide
+        if (!in_array($poste, $tables)) {
+            abort(404, 'Poste invalide.');
+        }
+
+        // Récupérer les informations du stagiaire dans la table correspondante
+        $stagiaire = DB::table($poste)->where('email', $email)->first();
+
+        if (!$stagiaire) {
+            abort(404, 'Stagiaire non trouvé.');
+        }
+
+        // Récupérer les tâches assignées au stagiaire
+        $tasks = DB::table('tasks')->where('user_id', $stagiaire->id)->get();
+
+        // Retourner la vue avec les données
+        return view('stagiaire.profile', [
+            'stagiaire' => $stagiaire,
+            'poste' => $poste,
+            'tasks' => $tasks,
+        ]);
+    }
 }
