@@ -33,6 +33,8 @@ Route::post('/demande/{id}/transferer-sg', [DemandeController::class, 'transfere
 Route::get('/dashboard-dpaf', [DemandeController::class, 'dashboardDpaf'])->name('dashboard.dpaf');
 Route::post('/demande/{id}/transferer-dpaf', [DemandeController::class, 'transfererDpaf'])->name('demande.transfererDpaf');
 Route::get('/dashboard/dpaf_post', [DemandeController::class, 'dashboardDpafPost'])->name('dashboard.dpaf_post');
+Route::get('/dpaf/tasks', [DemandeController::class, 'tasksDpaf'])->name('dpaf.tasks');
+Route::get('/dpaf/tasks', [DemandeController::class, 'tasksDpaf'])->name('dpaf.tasks');
 
 // Tableau de bord SRHDS
 Route::get('/dashboard-srhds', [DemandeController::class, 'dashboardSrhds'])->name('dashboard.srhds');
@@ -42,13 +44,14 @@ Route::get('/dashboard-dsi', [DsiController::class, 'dashboard'])->name('dashboa
 Route::get('/dsi/profile', [DsiController::class, 'profile'])->name('dsi.profile');
 Route::get('/dsi/documents', [DsiController::class, 'documents'])->name('dsi.documents');
 Route::post('/dsi/logout', [DsiController::class, 'logout'])->name('dsi.logout');
-Route::get('/dsi/tasks', [DsiController::class, 'tasks'])->name('dsi.tasks');
+Route::get('/dsi/tasks', [DemandeController::class, 'tasksDsi'])->name('dsi.tasks');
 Route::get('/dsi/demande/{id}', [DemandeController::class, 'showDsi'])->name('dsi.show');
 
 // Route spécifique pour comptabilite
 Route::get('/dashboard/comptabilite', [DemandeController::class, 'dashboardComptabilite'])->name('dashboard.comptabilite');
 Route::get('/dashboard-comptabilite', [ComptabiliteController::class, 'dashboard'])->name('dashboard.comptabilite');
 Route::get('/comptabilite/demande/{id}', [DemandeController::class, 'showComptabilite'])->name('comptabilite.show');
+Route::get('/comptabilite/tasks', [DemandeController::class, 'tasksComptabilite'])->name('comptabilite.tasks');
 
 // Route dynamique pour les autres postes
 Route::get('/dashboard/{poste}', [DemandeController::class, 'dashboardPoste'])->name('dashboard.poste');
@@ -75,3 +78,5 @@ Route::get('/demande/tasks', [DemandeController::class, 'tasks'])->name('demande
 Route::get('/dpaf/demande/{id}', [DemandeController::class, 'showDpaf'])->name('dpaf.show');
 
 Route::get('/secretaria/demande/{id}', [DemandeController::class, 'showSecretaria'])->name('secretaria.show');
+
+Route::get('/secretaria/tasks', [DemandeController::class, 'tasksSecretaria'])->name('secretaria.tasks');

@@ -377,4 +377,40 @@ class DemandeController extends Controller
             'date_fin' => $demande->date_fin,
         ]);
     }
+
+    public function tasksDsi()
+    {
+        // Récupérer les stagiaires de la table DSI
+        $demandes = DB::table('dsi')->get();
+
+        // Retourner la vue avec les données
+        return view('dashboard.dsi_tasks', compact('demandes'));
+    }
+
+    public function tasksSecretaria()
+    {
+        // Récupérer les stagiaires de la table Secretaria
+        $demandes = DB::table('secretaria')->get();
+
+        // Retourner la vue avec les données
+        return view('dashboard.secretaria_tasks', compact('demandes'));
+    }
+
+    public function tasksDpaf()
+    {
+        // Récupérer les stagiaires de la table DPAF
+        $demandes = DB::table('dpaf')->get();
+
+        // Retourner la vue avec les données
+        return view('dashboard.dpaf_tasks', compact('demandes'));
+    }
+
+    public function tasksComptabilite()
+    {
+        // Récupérer les stagiaires de la table Comptabilité
+        $demandes = DB::table('service_comptabilite')->get();
+
+        // Retourner la vue avec les données
+        return view('dashboard.comptabilite_tasks', compact('demandes'));
+    }
 }

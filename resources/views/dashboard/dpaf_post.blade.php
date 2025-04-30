@@ -12,6 +12,9 @@
             <a href="{{ route('demande.tasks') }}" class="block px-4 py-2 rounded hover:bg-gray-700">
                 Tâches
             </a>
+            <a href="{{ route('dpaf.tasks') }}" class="block px-4 py-2 rounded hover:bg-gray-700">
+                Tâches
+            </a>
         </nav>
     </aside>
 

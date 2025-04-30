@@ -9,7 +9,7 @@
             <a href="{{ route('dashboard.comptabilite') }}" class="block px-4 py-2 rounded hover:bg-gray-700">
                 Tableau de Bord
             </a>
-            <a href="{{ route('demande.tasks') }}" class="block px-4 py-2 rounded hover:bg-gray-700">
+            <a href="{{ route('comptabilite.tasks') }}" class="block px-4 py-2 rounded hover:bg-gray-700">
                 Tâches
             </a>
         </nav>

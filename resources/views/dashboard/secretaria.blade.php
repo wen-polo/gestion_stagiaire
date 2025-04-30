@@ -9,7 +9,7 @@
             <a href="{{ route('dashboard.secretaria') }}" class="block px-4 py-2 rounded hover:bg-gray-700">
                 Tableau de Bord
             </a>
-            <a href="{{ route('demande.tasks') }}" class="block px-4 py-2 rounded hover:bg-gray-700">
+            <a href="{{ route('secretaria.tasks') }}" class="block px-4 py-2 rounded hover:bg-gray-700">
                 Tâches
             </a>
         </nav>
